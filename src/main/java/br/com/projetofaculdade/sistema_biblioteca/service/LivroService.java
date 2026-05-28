@@ -1,6 +1,7 @@
 package br.com.projetofaculdade.sistema_biblioteca.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,22 @@ public class LivroService {
     private final iLivroRepository livroRepository;
     private final iAutorRepository autorRepository;
 
-    public List<LivrosEntity> findAll(){
-        return livroRepository.findAll();
+    public List<LivroDto> findAll(){
+        List<LivrosEntity> livros = livroRepository.findAll();
+
+        return livros.stream().map(livro -> {
+            LivroDto dto = new LivroDto();
+            dto.setNome(livro.getNome());
+            dto.setEditora(livro.getEditora());
+            dto.setAnoPublicacao(livro.getAnoPublicacao());
+            dto.setGenero(livro.getGenero());
+
+            if(livro.getAutor() != null){
+                dto.setAutorId(livro.getAutor().getId());
+            }
+
+            return dto;
+        }).collect(Collectors.toList());
     }
 
     public void save(LivroDto livroDto) throws NotFoundException {
@@ -32,6 +47,7 @@ public class LivroService {
             livro.setEditora(livroDto.getEditora());
             livro.setAnoPublicacao(livroDto.getAnoPublicacao());
             livro.setGenero(livroDto.getGenero());
+            
 
         livro.setAutor(autor);
 

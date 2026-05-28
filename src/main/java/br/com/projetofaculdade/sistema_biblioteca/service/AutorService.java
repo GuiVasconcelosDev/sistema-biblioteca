@@ -1,6 +1,7 @@
 package br.com.projetofaculdade.sistema_biblioteca.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,16 @@ public class AutorService {
 
     private final iAutorRepository autorRepository;
 
-    public List<AutorEntity> findAll(){
-        return autorRepository.findAll();
+   public List<AutorDto> findAll() {
+        List<AutorEntity> autores = autorRepository.findAll();
+
+        // Converte a lista de entidades para uma lista de DTOs limpos
+        return autores.stream().map(autor -> {
+            AutorDto dto = new AutorDto();
+            dto.setId(autor.getId());
+            dto.setNome(autor.getNome());
+            return dto;
+        }).collect(Collectors.toList());
     }
 
     public void save(AutorDto autorDto){
