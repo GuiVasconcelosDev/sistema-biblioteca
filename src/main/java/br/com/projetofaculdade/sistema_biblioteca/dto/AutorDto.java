@@ -1,5 +1,7 @@
 package br.com.projetofaculdade.sistema_biblioteca.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +15,7 @@ public class AutorDto {
     private Integer id;
 
     private String nome;
+
+    private List<LivroResumidoDto> livros;
 
 }
