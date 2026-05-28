@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 
-import br.com.projetofaculdade.sistema_biblioteca.database.model.LivrosEntity;
 import br.com.projetofaculdade.sistema_biblioteca.dto.LivroDto;
 import br.com.projetofaculdade.sistema_biblioteca.exception.NotFoundException;
 import br.com.projetofaculdade.sistema_biblioteca.service.LivroService;
@@ -27,7 +26,7 @@ public class LivroController {
     private final LivroService livroService;
 
     @GetMapping
-    public List<LivrosEntity> findAll(){
+    public List<LivroDto> findAll(){
         return livroService.findAll();
     }
 

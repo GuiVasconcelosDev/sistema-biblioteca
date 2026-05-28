@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.projetofaculdade.sistema_biblioteca.database.model.AutorEntity;
 import br.com.projetofaculdade.sistema_biblioteca.dto.AutorDto;
 import br.com.projetofaculdade.sistema_biblioteca.exception.NotFoundException;
 import br.com.projetofaculdade.sistema_biblioteca.service.AutorService;
@@ -26,7 +25,7 @@ public class AutorController {
     private final AutorService autorService;
 
     @GetMapping
-    public List<AutorEntity> findAll(){
+    public List<AutorDto> findAll(){
         return autorService.findAll();
     }
 
