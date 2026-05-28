@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 
 import br.com.projetofaculdade.sistema_biblioteca.database.model.LivrosEntity;
 import br.com.projetofaculdade.sistema_biblioteca.dto.LivroDto;
@@ -30,16 +32,19 @@ public class LivroController {
     }
 
     @PostMapping
-    public void criarLivro(@RequestBody LivroDto livroDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void criarLivro(@RequestBody LivroDto livroDto) throws NotFoundException {
         livroService.save(livroDto);
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public void atualizarLivro(@PathVariable Integer id, @RequestBody LivroDto livroDto) throws NotFoundException {
         livroService.update(id, livroDto);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarLivro(@PathVariable Integer id) {
         livroService.delete(id);
     }
