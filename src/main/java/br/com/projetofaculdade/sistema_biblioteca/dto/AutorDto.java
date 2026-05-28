@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AutorDto {
+    private Integer id;
 
     private String nome;
 

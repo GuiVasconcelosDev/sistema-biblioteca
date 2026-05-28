@@ -11,7 +11,7 @@ public interface iLivroRepository extends JpaRepository<LivrosEntity, Integer> {
     //Busca livros ignorando maiúsculas e minúsculas e pegando partes da palavra
     List<LivrosEntity> findByNomeContainingIgnoreCase(String nome);
 
-    //Busca todos os livros associados ao ID de um autor específico
     List<LivrosEntity> findByAutorId(Integer autorId);
+    
 
 }
