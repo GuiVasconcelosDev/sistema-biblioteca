@@ -14,6 +14,6 @@ public class LivroDto {
     
     private String nome;
     private String editora;
-    private String anoPublicacao;
+    private int anoPublicacao;
     private String genero;
 }

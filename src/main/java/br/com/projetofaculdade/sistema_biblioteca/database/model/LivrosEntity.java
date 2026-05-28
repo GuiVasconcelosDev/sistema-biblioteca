@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,8 +34,8 @@ public class LivrosEntity {
 
     @NotBlank
     private String editora;
-    @NotBlank
-    private String anoPublicacao;
+    @NotNull
+    private int anoPublicacao;
 
     @NotBlank
     private String genero;
