@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biblioteca — Sistema de Acervo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Source Serif 4"', 'Georgia', 'serif'],
+            sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --bg: #FAF6F0;
+      --surface: #FFFFFF;
+      --surface-2: #F4EDE3;
+      --border: #EAE0D2;
+      --text: #2B2521;
+      --text-muted: #8A7E70;
+      --primary: #B85C38;
+      --primary-strong: #A04E2E;
+      --primary-soft: #F6E7DC;
+      --primary-fg: #FFFFFF;
+      --ring: rgba(184, 92, 56, 0.28);
+      --primary-glow: rgba(184, 92, 56, 0.16);
+      --accent: #B85C38;
+    }
+    :root { --skeleton-hi: rgba(255, 255, 255, 0.65); }
+
+    html.theme-emerald {
+      --bg: #EEF3EC;
+      --surface: #FFFFFF;
+      --surface-2: #E2EDE2;
+      --border: #D2E0D2;
+      --text: #1A2620;
+      --text-muted: #67786D;
+      --primary: #137256;
+      --primary-strong: #0E5A43;
+      --primary-soft: #D6EADD;
+      --primary-fg: #FFFFFF;
+      --ring: rgba(19, 114, 86, 0.24);
+      --primary-glow: rgba(19, 114, 86, 0.18);
+      --accent: #B8893C;
+    }
+
+    html.dark {
+      --bg: #1A1512;
+      --surface: #241D17;
+      --surface-2: #2E2620;
+      --border: #3A3027;
+      --text: #F1E9DE;
+      --text-muted: #A99B8A;
+      --primary: #D67B4E;
+      --primary-strong: #C26B3D;
+      --primary-soft: #3A2A1F;
+      --primary-fg: #1A1512;
+      --ring: rgba(214, 123, 78, 0.34);
+      --primary-glow: rgba(214, 123, 78, 0.22);
+      --accent: #D67B4E;
+      --skeleton-hi: rgba(255, 255, 255, 0.06);
+    }
+
+    html.dark.theme-emerald {
+      --bg: #0D140F;
+      --surface: #15201A;
+      --surface-2: #1E2B23;
+      --border: #2B3A30;
+      --text: #E6F1E9;
+      --text-muted: #8A9A8F;
+      --primary: #45BA8A;
+      --primary-strong: #2FA071;
+      --primary-soft: #18271F;
+      --primary-fg: #07120C;
+      --ring: rgba(69, 186, 138, 0.34);
+      --primary-glow: rgba(69, 186, 138, 0.30);
+      --accent: #D2A84E;
+      --skeleton-hi: rgba(255, 255, 255, 0.06);
+    }
+
+    * { -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); }
+    .font-serif { font-family: 'Source Serif 4', Georgia, serif; }
+
+    .btn-primary {
+      background: linear-gradient(180deg, var(--primary), var(--primary-strong));
+    }
+    .btn-primary:hover { filter: brightness(1.06); }
+    .btn-primary:active { filter: brightness(0.96); }
+    .btn-primary:disabled { opacity: 0.65; cursor: not-allowed; filter: none; }
+
+    .btn-secondary {
+      background: var(--surface-2);
+      color: var(--text);
+      transition: background 0.15s;
+    }
+    .btn-secondary:hover { background: var(--border); }
+
+    .icon-btn {
+      padding: 6px;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icon-btn:hover { background: var(--surface-2); color: var(--text); }
+    .icon-btn.danger:hover { background: #fee2e2; color: #dc2626; }
+    html.dark .icon-btn.danger:hover { background: #3b1111; color: #f87171; }
+
+    .form-input {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .form-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--ring);
+    }
+    .form-input::placeholder { color: var(--text-muted); opacity: 0.7; }
+
+    .logo-glow { box-shadow: 0 8px 22px -8px var(--primary-glow), 0 1px 2px rgba(0,0,0,0.14); }
+    .glow-hover { transition: box-shadow .22s ease, transform .2s ease, border-color .2s ease; }
+    .glow-hover:hover { box-shadow: 0 14px 34px -16px var(--primary-glow), 0 2px 6px -2px var(--primary-glow); }
+
+    .skeleton {
+      background: linear-gradient(100deg, var(--surface-2) 30%, var(--skeleton-hi) 50%, var(--surface-2) 70%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s ease-in-out infinite;
+    }
+    @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes popIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .anim-fade { animation: fadeIn 0.2s ease-out; }
+    .anim-pop { animation: popIn 0.28s cubic-bezier(0.22, 1, 0.36, 1); }
+    .anim-toast { animation: toastIn 0.26s cubic-bezier(0.22, 1, 0.36, 1); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim-fade, .anim-pop, .anim-toast, .skeleton { animation: none !important; }
+    }
+
+    select option { color: var(--text); background: var(--surface); }
+    ::selection { background: var(--primary-soft); }
+
+    ::-webkit-scrollbar { width: 11px; height: 11px; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; border: 3px solid var(--bg); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="scripts/icons.jsx"></script>
+  <script type="text/babel" src="scripts/data.jsx"></script>
+  <script type="text/babel" src="scripts/ui.jsx"></script>
+  <script type="text/babel" src="scripts/books.jsx"></script>
+  <script type="text/babel" src="scripts/authors.jsx"></script>
+  <script type="text/babel" src="scripts/app.jsx"></script>
+</body>
+</html>
